@@ -21,7 +21,7 @@ void printBook(AddressBook& addressBook) {
 		printAddress(*it);
 	}
 }
-void printNameSortBook(AddressBook& addressBook){
+void printNameSortBook(AddressBook& addressBook) {
 	cout << "-----------------通讯录(按名字排序)-------------" << endl;
 	auto nameMap = addressBook.getNameMap();
 	for (auto it = nameMap.begin(); it != nameMap.end(); it++) {
@@ -32,15 +32,15 @@ void printNameSortBook(AddressBook& addressBook){
 int main() {
 	AddressBook book;
 	book.addAddress(Address("李", "华").addTel("1000000").addEmail("lihua@mail.com").addTel("13123213213"));
-	auto Aka=book.addAddress(Address("Aka", "rin").addEmail("aka@go.com"));
+	auto Aka = book.addAddress(Address("Aka", "rin").addEmail("aka@go.com"));
 	printBook(book);
 
 	Aka->addTel("13123123");
 	book.addAddress(Address("Misaka", "Mikoto").addEmail("aka@go.com"));
-	book.nameEqualRange("Misaka", "Mikoto").first->second->addTel("1000000");  
+	book.nameEqualRange("Misaka", "Mikoto").first->second->addTel("1000000");
 	printBook(book);
 
-	book.addAddress(Address("李", "华").addTel("20000").addEmail("lihua2@gmailcom").addEmail("cn@gov.cn"));
+
 
 	cout << "-----------电话为1000000的联系人有:---------" << endl;
 	AddressBook::StringMapRange range = book.telEqualRange("1000000");
@@ -48,7 +48,7 @@ int main() {
 		printAddress(*(it->second));
 	}
 
-	cout << "-----------删除李华的号码10000000-----------" << endl<<endl;
+	cout << "-----------删除李华的号码10000000-----------" << endl << endl;
 	book.nameEqualRange("李", "华").first->second->deleteTel("1000000");
 
 	cout << "-----------电话为1000000的联系人有:---------" << endl;
@@ -61,12 +61,14 @@ int main() {
 	for (auto it = range.first; it != range.second; it++) {
 		printAddress(*(it->second));
 	}
+	cout << "--------------添加同名李华------------------" << endl << endl;
+	book.addAddress(Address("李", "华").addTel("20000").addEmail("lihua2@gmailcom").addEmail("cn@gov.cn"));
 	cout << "------------名字为李华的联系人有:-----------" << endl;
 	range = book.nameEqualRange("李", "华");
 	for (auto it = range.first; it != range.second; it++) {
 		printAddress(*(it->second));
 	}
-	
+
 	printNameSortBook(book);
 
 	cout << "--------------删除Aka rin-----------------" << endl << endl;

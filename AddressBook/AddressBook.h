@@ -9,21 +9,21 @@ class AddressBook;
 
 class Address {
 private:
-	friend AddressBook;  
+	friend AddressBook;
 	std::string FirstName, LastName;
 	std::vector<std::string> telList;
 	std::vector<std::string> emailList;
 	AddressBook* book;
 public:
-	Address(): book(nullptr){}
+	Address() : book(nullptr) {}
 	Address(std::string fname, std::string lname)
-		:FirstName(fname), LastName(lname),book(nullptr) {};
+		:FirstName(fname), LastName(lname), book(nullptr) {};
 	~Address() {};
 	std::string getFirstName() const;
 	std::string getLastName() const;
 	const std::vector<std::string>& getTelList() const;
 	const std::vector<std::string>& getEmailList() const;
-	Address& setName(std::string fname,std::string lname);
+	Address& setName(std::string fname, std::string lname);
 	Address& addTel(std::string _tel);
 	Address& addEmail(std::string _email);
 	Address& deleteTel(std::string _tel);
@@ -36,7 +36,7 @@ public:
 	typedef std::multimap<std::string, Address*> StringMap;
 	typedef std::pair<StringMap::iterator, StringMap::iterator> StringMapRange;
 	AddressBook() {};
-	~AddressBook() {}; 
+	~AddressBook() {};
 	AddressList::iterator begin();
 	AddressList::iterator end();
 	StringMapRange nameEqualRange(std::string FirstName, std::string LastName);

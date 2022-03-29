@@ -2,7 +2,7 @@
 
 using namespace std;
 
-string Address::getFirstName() const{
+string Address::getFirstName() const {
 	return FirstName;
 }
 string Address::getLastName() const {
@@ -17,12 +17,12 @@ const vector<string>& Address::getEmailList() const {
 	return emailList;
 }
 
-Address& Address::setName(string fname,string lname) {
+Address& Address::setName(string fname, string lname) {
 	if (book) {
 		auto it = book->multiFind(book->nameMap, make_pair(FirstName + LastName, this));  //replace if existed
 		if (it != book->nameMap.end()) book->nameMap.erase(it);
-		book->nameMap.insert(make_pair(fname+lname, this)); 
-		
+		book->nameMap.insert(make_pair(fname + lname, this));
+
 	}
 	FirstName = fname;
 	LastName = lname;
@@ -33,7 +33,7 @@ Address& Address::addTel(string _tel) {
 	telList.push_back(_tel);
 	if (book) {
 		if (AddressBook::multiFind(book->telMap, make_pair(_tel, this)) == book->telMap.end()) { //contiue if existed
-			book->telMap.insert(make_pair(_tel, this)); 
+			book->telMap.insert(make_pair(_tel, this));
 		}
 	}
 	return *this;
@@ -76,12 +76,12 @@ AddressList::iterator AddressBook::end() {
 }
 
 typedef std::multimap<std::string, AddressList::iterator> StringMap;
-AddressBook::StringMapRange AddressBook::nameEqualRange(string FirstName,string LastName) {
+AddressBook::StringMapRange AddressBook::nameEqualRange(string FirstName, string LastName) {
 	return nameMap.equal_range(FirstName + LastName);
 }
 
 AddressBook::StringMapRange AddressBook::telEqualRange(string _tel) {
-    return telMap.equal_range(_tel);
+	return telMap.equal_range(_tel);
 }
 
 AddressBook::StringMapRange AddressBook::emailEqualRange(string _email) {
@@ -106,9 +106,9 @@ AddressList::iterator AddressBook::addAddress(const Address& _new) {
 }
 
 AddressBook& AddressBook::deleteAddress(AddressList::iterator pos) {
-	auto it = multiFind(nameMap,make_pair(pos->FirstName + pos->LastName, &*pos));
+	auto it = multiFind(nameMap, make_pair(pos->FirstName + pos->LastName, &*pos));
 	if (it != nameMap.end()) nameMap.erase(it);
-	while(!pos->telList.empty()){
+	while (!pos->telList.empty()) {
 		pos->deleteTel(pos->telList.back());
 	}
 
@@ -126,7 +126,7 @@ AddressBook& AddressBook::deleteAddress(Address* pos) {
 
 std::multimap<std::string, Address*>::const_iterator AddressBook::multiFind(const std::multimap<std::string, Address*>& _map,
 	const std::pair< std::string, Address*> _pair) {
-	for (auto it=_map.lower_bound(_pair.first); it!=_map.end() && it->first == _pair.first; it++) {
+	for (auto it = _map.lower_bound(_pair.first); it != _map.end() && it->first == _pair.first; it++) {
 		if (it->second == _pair.second) {
 			return it;
 		}
