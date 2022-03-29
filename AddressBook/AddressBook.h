@@ -13,12 +13,12 @@ private:
 	std::string FirstName, LastName;
 	std::vector<std::string> telList;
 	std::vector<std::string> emailList;
-	AddressBook* book;
+	AddressBook* book; //记录所属通讯录
 public:
 	Address() : book(nullptr) {}
 	Address(std::string fname, std::string lname)
 		:FirstName(fname), LastName(lname), book(nullptr) {};
-	~Address() {};
+	~Address() {};  //使用STL容器管理内存
 	std::string getFirstName() const;
 	std::string getLastName() const;
 	const std::vector<std::string>& getTelList() const;
@@ -36,10 +36,10 @@ public:
 	typedef std::multimap<std::string, Address*> StringMap;
 	typedef std::pair<StringMap::iterator, StringMap::iterator> StringMapRange;
 	AddressBook() {};
-	~AddressBook() {};
+	~AddressBook() {}; //使用STL容器管理内存
 	AddressList::iterator begin();
 	AddressList::iterator end();
-	StringMapRange nameEqualRange(std::string FirstName, std::string LastName);
+	StringMapRange nameEqualRange(std::string FirstName, std::string LastName);  //索引表使用可重映射，故查找函数返回的是范围
 	StringMapRange telEqualRange(std::string tel);
 	StringMapRange emailEqualRange(std::string email);
 	const StringMap& getNameMap() { return nameMap; }
@@ -51,12 +51,12 @@ public:
 private:
 	friend Address;      //元素改变由Adress类方法支持，需同时维护AdressBook的索引表，故作为友元类
 	AddressList addressList;  //使用std::list作为容器，同时用multimap维护索引加快搜索
-	std::map<Address*, AddressList::iterator> pointerConverter;  //STL不支持将指针转换为list所需迭代器，故维护映射表
+	std::map<Address*, AddressList::iterator> pointerConverter;  //STL不支持将指针转换为list所需迭代器，故维护指针-迭代器映射表
 	StringMap nameMap;
 	StringMap telMap;
 	StringMap emailMap;
-	static StringMap::const_iterator multiFind(const StringMap& _map,
-		const std::pair< std::string, Address*> _pair);
+	static StringMap::const_iterator multiFind(const StringMap& _map,  
+		const std::pair< std::string, Address*> _pair);   //在可重映射中查找特定键-值对
 };
 
 #endif
